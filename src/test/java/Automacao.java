@@ -90,5 +90,33 @@ public class Automacao {
     }
 
     @Test
-    public void
+    public void removerProduto(){
+        System.setProperty("webdriver.chrome.driver", "src\\drive\\chromedriver.exe");
+        WebDriver navegar = new ChromeDriver();
+
+        navegar.get("https://advantageonlineshopping.com/");
+
+        String text = "Your shopping cart is empty";
+
+        //Foi colocado um wait entre os get pois estava dando erro. Tentava se executar o comando antes da página carregar
+        try { Thread.sleep (5000); } catch (InterruptedException ex) {}
+
+        navegar.findElement(By.id("see_offer_btn")).click();
+
+        try { Thread.sleep (5000); } catch (InterruptedException ex) {}
+
+        navegar.findElement(By.xpath("/html/body/div[3]/section/article[1]/div[2]/div[2]/div/div[1]/div[2]/span[4]")).click();
+
+        navegar.findElement(By.xpath("/html/body/div[3]/section/article[1]/div[2]/div[2]/div/div[4]/button")).click();
+
+        navegar.findElement(By.id("menuCart")).click();
+
+        try { Thread.sleep (5000); } catch (InterruptedException ex) {}
+
+        navegar.findElement(By.xpath("/html/body/div[3]/section/article/div[1]/table/tbody/tr/td[6]/span/a[3]")).click();
+
+        //Validacoes
+        String bodyText = navegar.findElement(By.xpath("/html/body/div[3]/section/article/div[1]/div/label")).getText();
+        Assert.assertTrue("Text not found!", bodyText.contains(text));
+    }
 }
